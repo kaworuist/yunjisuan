@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  controller:
+    image: kaworuist/rt-controller:v1
+    ports:
+      - 9000:9000
+    networks:
+      - rayscale-net
+
+  tracer:
+    image: kaworuist/rt-tracer:v1
+    ports:
+      - 8500:8500
+    environment:
+      - CONTROLLER_ENDPOINT=http://controller:9000/api
+    depends_on:
+      - controller
+    networks:
+      - rayscale-net
+
+volumes:
+  render-data:
+
+networks:
+  rayscale-net:
